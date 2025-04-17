@@ -1,5 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Controller, Inject, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('auth')
