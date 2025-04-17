@@ -4,6 +4,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth/auth.controller';
 import { ChatModule } from './chat/chat.module';
 import { ChatController } from './chat/chat.controller';
+import { FeedModule } from './feed/feed.module';
+import { FeedController } from './feed/feed.controller';
 
 @Module({
   imports: [
@@ -13,7 +15,7 @@ import { ChatController } from './chat/chat.controller';
         transport: Transport.TCP,
         options: {
           host: '127.0.0.1',
-          port: 4001
+          port: 4001,
         },
       },
       {
@@ -21,7 +23,7 @@ import { ChatController } from './chat/chat.controller';
         transport: Transport.TCP,
         options: {
           host: '127.0.0.1',
-          port: 4002
+          port: 4002,
         },
       },
       {
@@ -29,11 +31,19 @@ import { ChatController } from './chat/chat.controller';
         transport: Transport.TCP,
         options: {
           host: '127.0.0.1',
-          port: 4004
+          port: 4004,
+        },
+      },
+      {
+        name: 'FEED_SERVICE',
+        transport: Transport.TCP,
+        options: {
+          host: '127.0.0.1',
+          port: 4005,
         },
       },
     ]),
   ],
-  controllers: [PostController, AuthController, ChatController],
+  controllers: [PostController, AuthController, ChatController, FeedController],
 })
 export class AppModule {}
