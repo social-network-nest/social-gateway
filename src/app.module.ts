@@ -9,12 +9,18 @@ import { AuthController } from './auth/auth.controller';
       {
         name: 'POST_SERVICE',
         transport: Transport.TCP,
-        options: { host: '127.0.0.1', port: 4001 },
+        options: {
+          host: '127.0.0.1',
+          port: 4001
+        },
       },
       {
         name: 'AUTH_SERVICE',
         transport: Transport.TCP,
-        options: { host: '127.0.0.1', port: 4002 },
+        options: {
+          host: '127.0.0.1',
+          port: 4002
+        },
       },
     ]),
   ],
