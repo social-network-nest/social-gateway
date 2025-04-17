@@ -7,7 +7,7 @@ export class AuthController {
     @Inject('AUTH_SERVICE') private readonly client: ClientProxy,
   ) {}
 
-  @Post('login')
+  @Post()
   async login() {
     return this.client.send({ cmd: 'login_user' }, {});
   }
