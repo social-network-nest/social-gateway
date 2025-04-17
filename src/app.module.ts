@@ -6,6 +6,8 @@ import { ChatModule } from './chat/chat.module';
 import { ChatController } from './chat/chat.controller';
 import { FeedModule } from './feed/feed.module';
 import { FeedController } from './feed/feed.controller';
+import { ServiceSearchModule } from './service-search/service-search.module';
+import { ServiceSearchController } from './service-search/service-search.controller';
 
 @Module({
   imports: [
@@ -42,8 +44,16 @@ import { FeedController } from './feed/feed.controller';
           port: 4005,
         },
       },
+      {
+        name: 'SERVICE_SEARCH',
+        transport: Transport.TCP,
+        options: {
+          host: '127.0.0.1',
+          port: 4006,
+        },
+      },
     ]),
   ],
-  controllers: [PostController, AuthController, ChatController, FeedController],
+  controllers: [PostController, AuthController, ChatController, FeedController, ServiceSearchController],
 })
 export class AppModule {}
