@@ -2,12 +2,9 @@ import { Module } from '@nestjs/common';
 import { PostController } from './post/post.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth/auth.controller';
-import { ChatModule } from './chat/chat.module';
 import { ChatController } from './chat/chat.controller';
-import { FeedModule } from './feed/feed.module';
 import { FeedController } from './feed/feed.controller';
-import { ServiceSearchModule } from './service-search/service-search.module';
-import { ServiceSearchController } from './service-search/service-search.controller';
+import { SearchController } from './search/search.controller';
 
 @Module({
   imports: [
@@ -45,7 +42,7 @@ import { ServiceSearchController } from './service-search/service-search.control
         },
       },
       {
-        name: 'SERVICE_SEARCH',
+        name: 'SEARCH_SERVICE',
         transport: Transport.TCP,
         options: {
           host: '127.0.0.1',
@@ -54,6 +51,12 @@ import { ServiceSearchController } from './service-search/service-search.control
       },
     ]),
   ],
-  controllers: [PostController, AuthController, ChatController, FeedController, ServiceSearchController],
+  controllers: [
+    PostController,
+    AuthController,
+    ChatController,
+    FeedController,
+    SearchController,
+  ],
 })
 export class AppModule {}
