@@ -1,5 +1,5 @@
 import { Controller, Inject, Post } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, Payload } from '@nestjs/microservices';
 
 @Controller('chat')
 export class ChatController {
@@ -8,7 +8,7 @@ export class ChatController {
   ) {}
 
   @Post()
-  async createChat() {
-    return this.client.send({ cmd: 'create_chat' }, {})
+  async createChat(@Payload() payload: any) {
+    return this.client.send({ cmd: 'create_chat' }, payload)
   }
 }
