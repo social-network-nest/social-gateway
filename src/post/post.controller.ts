@@ -1,9 +1,11 @@
-import { Controller, Get, Inject, Post } from '@nestjs/common';
+import { Controller, Inject, Post } from '@nestjs/common';
 import { ClientProxy, Payload } from '@nestjs/microservices';
 
 @Controller('post')
 export class PostController {
-  constructor(@Inject('POST_SERVICE') private readonly client: ClientProxy) {}
+  constructor(
+    @Inject('POST_SERVICE') private readonly client: ClientProxy
+  ) {}
 
   @Post()
   async create(@Payload() payload: any) {
