@@ -1,5 +1,5 @@
 import { Controller, Inject, Post } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, Payload } from '@nestjs/microservices';
 
 @Controller('auth')
 export class AuthController {
@@ -10,5 +10,10 @@ export class AuthController {
   @Post()
   async login() {
     return this.client.send({ cmd: 'login_user' }, {});
+  }
+
+  @Post('register')
+  async register(@Payload() payload: any) {
+    return this.client.send({ cmd: 'register' }, payload);
   }
 }
