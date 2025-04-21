@@ -12,10 +12,9 @@ export class PostService {
         const token = authorization?.replace('Bearer ', '');
         if (!token) throw new UnauthorizedException('No token provided');
 
-        const tokenValidation = await this.authClient.send({ cmd: 'verify.token' }, token).toPromise();
-        if (!tokenValidation.valid) {
-            throw new UnauthorizedException(tokenValidation.message || 'Token is invalid or expired');
-        }
+        const tokenValidation = await this.authClient.send({ cmd: 'verify.token' }, token)
+            .toPromise();
+        if (!tokenValidation.valid) 'Token is invalid or expired'
 
         return this.postClient.send({ cmd: 'create_post' }, payload);
     }
