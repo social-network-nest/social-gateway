@@ -5,6 +5,7 @@ import { AuthController } from './auth/auth.controller';
 import { ChatController } from './chat/chat.controller';
 import { FeedController } from './feed/feed.controller';
 import { SearchController } from './search/search.controller';
+import { PostService } from './post/post.service';
 
 @Module({
   imports: [
@@ -58,5 +59,6 @@ import { SearchController } from './search/search.controller';
     FeedController,
     SearchController,
   ],
+  providers: [PostService],
 })
 export class AppModule {}
