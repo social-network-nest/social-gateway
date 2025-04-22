@@ -7,6 +7,7 @@ import { FeedController } from './feed/feed.controller';
 import { SearchController } from './search/search.controller';
 import { PostService } from './post/post.service';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { JwtModule } from '@nestjs/jwt';
         },
       },
     ]),
+    AuthModule,
   ],
   controllers: [
     PostController,

@@ -8,14 +8,14 @@ export class AuthService {
     ) {}
 
     async validateToken(token: string) {
-        const response = await this.authClient
+        const {valid, decode} = await this.authClient
             .send({ cmd: 'verify.token' }, token)
             .toPromise();
 
-        if (!response?.valid || !response.payload) {
+        if (!valid || !decode) {
             throw new UnauthorizedException('Token is invalid or expired');
         }
 
-        return response.payload;
+        return decode;
     }
 }
