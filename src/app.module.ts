@@ -6,9 +6,14 @@ import { ChatController } from './chat/chat.controller';
 import { FeedController } from './feed/feed.controller';
 import { SearchController } from './search/search.controller';
 import { PostService } from './post/post.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    JwtModule.register({
+      secret: 'jwt_secret',
+      signOptions: { expiresIn: '24h' },
+    }),
     ClientsModule.register([
       {
         name: 'POST_SERVICE',
