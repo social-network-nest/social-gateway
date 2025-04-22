@@ -18,4 +18,8 @@ export class PostService {
 
         return this.postClient.send({ cmd: 'create' }, payload);
     }
+
+    async list() {
+        return this.postClient.send({ cmd: 'list' }, {});
+    }
 }

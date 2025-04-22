@@ -1,4 +1,4 @@
-import { Controller, Headers, Inject, Post, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Headers, Inject, Post, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy, Payload } from '@nestjs/microservices';
 import { PostService } from './post.service';
 
@@ -12,5 +12,12 @@ export class PostController {
     @Payload() payload: any
   ) {
     return this.postService.create(authorization, payload);
+  }
+
+  @Get('list')
+  async list(
+    @Headers('authorization') authorization: string,
+  ) {
+    return this.postService.list();
   }
 }
