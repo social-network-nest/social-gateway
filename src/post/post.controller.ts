@@ -1,4 +1,4 @@
-import { Controller, Get, Headers, Inject, Post, UnauthorizedException } from '@nestjs/common';
+import { Controller, Delete, Get, Headers, Inject, Patch, Post, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy, Payload } from '@nestjs/microservices';
 import { PostService } from './post.service';
 
@@ -9,17 +9,33 @@ export class PostController {
   ) {}
 
   @Get('list')
-  async list(
+  list(
     @Headers('authorization') authorization: string,
   ) {
     return this.postService.list(authorization);
   }
 
   @Post('create')
-  async create(
+  create(
     @Headers('authorization') authorization: string,
     @Payload() payload: any
   ) {
     return this.postService.create(authorization, payload);
+  }
+
+  @Patch('update')
+  update(
+    @Headers('authorization') authorization: string,
+    @Payload() payload: any
+  ) {
+    return this.postService.update(authorization, payload);
+  }
+
+  @Delete('delete')
+  delete(
+    @Headers('authorization') authorization: string,
+    @Payload() payload: any
+  ) {
+    return this.postService.delete(authorization, payload);
   }
 }
