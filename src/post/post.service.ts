@@ -9,17 +9,23 @@ export class PostService {
         private readonly authService: AuthService,
     ) {}
 
-    async create(authorization: string, payload: any) {
+    async accessToken(authorization: string) {
         const token = authorization?.replace('Bearer ', '');
-        if (!token) throw new UnauthorizedException('No token provided');
+        if (!token) {
+            throw new UnauthorizedException('No token provided');
+        }
+        return await this.authService.validateToken(token);
+    }
 
-        const {user_id} = await this.authService.validateToken(token);
+    async list(authorization: string) {
+        await this.accessToken(authorization);
+        return this.postClient.send({ cmd: 'list' }, {});
+    }
+
+    async create(authorization: string, payload: any) {
+        const {user_id} = await this.accessToken(authorization);
         payload.userId = user_id;
 
         return this.postClient.send({ cmd: 'create' }, payload);
-    }
-
-    async list() {
-        return this.postClient.send({ cmd: 'list' }, {});
     }
 }

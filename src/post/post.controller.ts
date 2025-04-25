@@ -8,18 +8,18 @@ export class PostController {
     private readonly postService: PostService,
   ) {}
 
+  @Get('list')
+  async list(
+    @Headers('authorization') authorization: string,
+  ) {
+    return this.postService.list(authorization);
+  }
+
   @Post('create')
   async create(
     @Headers('authorization') authorization: string,
     @Payload() payload: any
   ) {
     return this.postService.create(authorization, payload);
-  }
-
-  @Get('list')
-  async list(
-    @Headers('authorization') authorization: string,
-  ) {
-    return this.postService.list();
   }
 }
