@@ -13,8 +13,8 @@ export class PostService {
         const token = authorization?.replace('Bearer ', '');
         if (!token) throw new UnauthorizedException('No token provided');
 
-        const { id } = await this.authService.validateToken(token);
-        payload.userId = id;
+        const {user_id} = await this.authService.validateToken(token);
+        payload.userId = user_id;
 
         return this.postClient.send({ cmd: 'create' }, payload);
     }
