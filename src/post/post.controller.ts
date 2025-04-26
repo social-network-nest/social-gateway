@@ -15,6 +15,14 @@ export class PostController {
     return this.postService.list(authorization);
   }
 
+  @Post('find')
+  find(
+    @Headers('authorization') authorization: string,
+    @Payload() payload: any
+  ) {
+    return this.postService.find(authorization, payload);
+  }
+
   @Post('create')
   create(
     @Headers('authorization') authorization: string,

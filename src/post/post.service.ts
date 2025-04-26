@@ -19,21 +19,15 @@ export class PostService {
         return await this.authService.validateToken(token);
     }
 
-    async getUserId(
-        authorization: string,
-    ) {
-        const {user_id} = await this.accessToken(authorization);
-        return user_id;
-    }
-
     async createParams(
         authorization: string,
         payload: any,
     ) {
+        const {userId} = await this.accessToken(authorization);
         return {
             ...payload,
-            userId: await this.getUserId(authorization),
-        };
+            userId,
+        }
     }
 
     async list(
@@ -41,6 +35,14 @@ export class PostService {
     ) {
         await this.accessToken(authorization);
         return this.postClient.send({ cmd: 'list' }, {});
+    }
+
+    async find(
+        authorization: string,
+        payload: any,
+    ) {
+        await this.accessToken(authorization);
+        return this.postClient.send({ cmd: 'find' }, payload);
     }
 
     async create(
