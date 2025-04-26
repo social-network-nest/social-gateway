@@ -18,4 +18,14 @@ export class AuthService {
 
         return decode;
     }
+
+    async accessToken(
+        authorization: string,
+    ) {
+        const token = authorization?.replace('Bearer ', '');
+        if (!token) {
+            throw new UnauthorizedException('No token provided');
+        }
+        return this.validateToken(token);
+    }
 }

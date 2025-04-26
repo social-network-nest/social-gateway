@@ -6,18 +6,7 @@ import { AuthService } from 'src/auth/auth.service';
 export class PostService {
     constructor(
         @Inject('POST_SERVICE') private readonly postClient: ClientProxy,
-        private readonly authService: AuthService,
     ) {}
-
-    async accessToken(
-        authorization: string,
-    ) {
-        const token = authorization?.replace('Bearer ', '');
-        if (!token) {
-            throw new UnauthorizedException('No token provided');
-        }
-        return await this.authService.validateToken(token);
-    }
 
     async createParams(
         authorization: string,
@@ -30,10 +19,7 @@ export class PostService {
         }
     }
 
-    async list(
-        authorization: string,
-    ) {
-        await this.accessToken(authorization);
+    async list() {
         return this.postClient.send({ cmd: 'list' }, {});
     }
 
@@ -67,11 +53,7 @@ export class PostService {
         return this.postClient.send({ cmd: 'update' }, params);
     }
 
-    async delete(
-        authorization: string,
-        id: string,
-    ) {
-        await this.accessToken(authorization);
+    delete(id: string) {
         return this.postClient.send({ cmd: 'delete' }, id);
     }
 }
