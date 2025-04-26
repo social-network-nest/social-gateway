@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Headers, Inject, Param, Patch, Post, UnauthorizedException } from '@nestjs/common';
-import { ClientProxy, Payload } from '@nestjs/microservices';
+import { Controller, Delete, Get, Headers, Param, Patch, Post } from '@nestjs/common';
+import { Payload } from '@nestjs/microservices';
 import { PostService } from './post.service';
 import { AuthService } from 'src/auth/auth.service';
 
@@ -19,11 +19,13 @@ export class PostController {
   }
 
   @Post('create')
-  create(
+  async create(
     @Headers('authorization') authorization: string,
-    @Payload() payload: any
+    @Payload() payload: any,
   ) {
-    return this.postService.create(authorization, payload);
+    const {userId} = await this.authService.accessToken(authorization)
+    payload.userId = userId;
+    return this.postService.create(payload);
   }
 
   @Get(':id')
@@ -31,21 +33,25 @@ export class PostController {
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
   ) {
-    return this.postService.find(authorization, id);
+    this.authService.accessToken(authorization);
+    return this.postService.find(id);
   }
 
-  @Patch('update')
+  @Patch(':id')
   update(
     @Headers('authorization') authorization: string,
-    @Payload() payload: any
+    @Param('id') id: string,
+    @Payload() payload: any,
   ) {
-    return this.postService.update(authorization, payload);
+    this.authService.accessToken(authorization);
+    payload.postId = id;
+    return this.postService.update(payload);
   }
 
   @Delete(':id')
   delete(
     @Headers('authorization') authorization: string,
-    @Param('id') id: string
+    @Param('id') id: string,
   ) {
     this.authService.accessToken(authorization);
     return this.postService.delete(id);

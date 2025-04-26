@@ -11,17 +11,13 @@ export class AuthService {
         const {valid, decode} = await this.authClient
             .send({ cmd: 'verify.token' }, token)
             .toPromise();
-
         if (!valid || !decode) {
             throw new UnauthorizedException('Token is invalid or expired');
         }
-
         return decode;
     }
 
-    async accessToken(
-        authorization: string,
-    ) {
+    async accessToken(authorization: string) {
         const token = authorization?.replace('Bearer ', '');
         if (!token) {
             throw new UnauthorizedException('No token provided');
