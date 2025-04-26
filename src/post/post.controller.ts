@@ -10,7 +10,7 @@ export class PostController {
     private readonly authService: AuthService,
   ) {}
 
-  @Get('list')
+  @Get()
   list(
     @Headers('authorization') authorization: string,
   ) {
