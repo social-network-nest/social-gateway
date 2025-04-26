@@ -18,7 +18,7 @@ export class PostController {
     return this.postService.list();
   }
 
-  @Post('create')
+  @Post()
   async create(
     @Headers('authorization') authorization: string,
     @Payload() payload: any,
