@@ -11,9 +11,10 @@ export class FeedController {
   ) {}
 
   @Get()
-  list(
+  async list(
     @Headers('authorization') authorization: string,
   ) {
+    await this.authService.accessToken(authorization);
     return this.feedService.list();
   }
 
@@ -22,31 +23,37 @@ export class FeedController {
     @Headers('authorization') authorization: string,
     @Payload() payload: any,
   ) {
+    const {userId} = await this.authService.accessToken(authorization)
+    payload.userId = userId;
     return this.feedService.create(payload);
   }
 
   @Get(':id')
-  find(
+  async find(
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
   ) {
+    await this.authService.accessToken(authorization);
     return this.feedService.find(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
     @Payload() payload: any,
   ) {
+    await this.authService.accessToken(authorization);
+    payload.feedId = id;
     return this.feedService.update(payload);
   }
 
   @Delete(':id')
-  delete(
+  async delete(
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
   ) {
+    await this.authService.accessToken(authorization);
     return this.feedService.delete(id);
   }
 }

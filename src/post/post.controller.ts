@@ -11,10 +11,10 @@ export class PostController {
   ) {}
 
   @Get()
-  list(
+  async list(
     @Headers('authorization') authorization: string,
   ) {
-    this.authService.accessToken(authorization);
+    await this.authService.accessToken(authorization);
     return this.postService.list();
   }
 
@@ -29,31 +29,31 @@ export class PostController {
   }
 
   @Get(':id')
-  find(
+  async find(
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
   ) {
-    this.authService.accessToken(authorization);
+    await this.authService.accessToken(authorization);
     return this.postService.find(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
     @Payload() payload: any,
   ) {
-    this.authService.accessToken(authorization);
+    await this.authService.accessToken(authorization);
     payload.postId = id;
     return this.postService.update(payload);
   }
 
   @Delete(':id')
-  delete(
+  async delete(
     @Headers('authorization') authorization: string,
     @Param('id') id: string,
   ) {
-    this.authService.accessToken(authorization);
+    await this.authService.accessToken(authorization);
     return this.postService.delete(id);
   }
 }
