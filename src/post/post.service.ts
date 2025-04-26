@@ -37,14 +37,6 @@ export class PostService {
         return this.postClient.send({ cmd: 'list' }, {});
     }
 
-    async find(
-        authorization: string,
-        id: string,
-    ) {
-        await this.accessToken(authorization);
-        return this.postClient.send({ cmd: 'find' }, id);
-    }
-
     async create(
         authorization: string,
         payload: any,
@@ -54,6 +46,14 @@ export class PostService {
             payload,
         );
         return this.postClient.send({ cmd: 'create' }, params);
+    }
+
+    async find(
+        authorization: string,
+        id: string,
+    ) {
+        await this.accessToken(authorization);
+        return this.postClient.send({ cmd: 'find' }, id);
     }
 
     async update(
@@ -69,12 +69,9 @@ export class PostService {
 
     async delete(
         authorization: string,
-        payload: any,
+        id: string,
     ) {
-        const params = await this.createParams(
-            authorization,
-            payload,
-        );
-        return this.postClient.send({ cmd: 'delete' }, params);
+        await this.accessToken(authorization);
+        return this.postClient.send({ cmd: 'delete' }, id);
     }
 }

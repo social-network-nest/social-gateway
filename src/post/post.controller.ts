@@ -15,14 +15,6 @@ export class PostController {
     return this.postService.list(authorization);
   }
 
-  @Get(':id')
-  find(
-    @Headers('authorization') authorization: string,
-    @Param('id') id: any
-  ) {
-    return this.postService.find(authorization, id);
-  }
-
   @Post('create')
   create(
     @Headers('authorization') authorization: string,
@@ -31,7 +23,15 @@ export class PostController {
     return this.postService.create(authorization, payload);
   }
 
-  @Patch('update')
+  @Get(':id')
+  find(
+    @Headers('authorization') authorization: string,
+    @Param('id') id: string,
+  ) {
+    return this.postService.find(authorization, id);
+  }
+
+  @Patch(':id')
   update(
     @Headers('authorization') authorization: string,
     @Payload() payload: any
@@ -39,11 +39,11 @@ export class PostController {
     return this.postService.update(authorization, payload);
   }
 
-  @Delete('delete')
+  @Delete(':id')
   delete(
     @Headers('authorization') authorization: string,
-    @Payload() payload: any
+    @Param('id') id: string
   ) {
-    return this.postService.delete(authorization, payload);
+    return this.postService.delete(authorization, id);
   }
 }
