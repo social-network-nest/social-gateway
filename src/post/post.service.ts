@@ -39,10 +39,10 @@ export class PostService {
 
     async find(
         authorization: string,
-        payload: any,
+        id: string,
     ) {
         await this.accessToken(authorization);
-        return this.postClient.send({ cmd: 'find' }, payload);
+        return this.postClient.send({ cmd: 'find' }, id);
     }
 
     async create(

@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Headers, Inject, Patch, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Inject, Param, Patch, Post, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy, Payload } from '@nestjs/microservices';
 import { PostService } from './post.service';
 
@@ -15,12 +15,12 @@ export class PostController {
     return this.postService.list(authorization);
   }
 
-  @Post('find')
+  @Get(':id')
   find(
     @Headers('authorization') authorization: string,
-    @Payload() payload: any
+    @Param('id') id: any
   ) {
-    return this.postService.find(authorization, payload);
+    return this.postService.find(authorization, id);
   }
 
   @Post('create')
