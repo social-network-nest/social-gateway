@@ -16,7 +16,25 @@ export class ChatController {
     @Headers('authorization') authorization: string,
   ) {
     const { userId } = await this.authService.accessToken(authorization);
-    return this.chatService.listChat(userId);
+    const chats = await firstValueFrom(
+      this.chatService.listChat(userId),
+    )
+    for (const chat of chats) {
+      const updatedUsers: any[] = [];
+
+      for (const userId of chat.users) {
+        const {id, firstName, lastName} = await this.authService.findUserById(userId);
+        updatedUsers.push({
+          id: id,
+          name: `${firstName} ${lastName}`
+        });
+      }
+
+      chat.users = updatedUsers;
+    }
+
+    return chats;
+
   }
 
   @Post()
@@ -47,10 +65,10 @@ export class ChatController {
     await this.authService.accessToken(authorization);
     const messages = await firstValueFrom(
       this.chatService.showMessageChat(chatId)
-    );
-    for (const item of messages) {
-      const { firstName, lastName } = await this.authService.findUserById(item.userId);
-      item.userId = `${firstName} ${lastName}`;
+    )
+    for (const message of messages) {
+      const { firstName, lastName } = await this.authService.findUserById(message.userId);
+      message.userId = `${firstName} ${lastName}`;
     }
     return messages;
   }
