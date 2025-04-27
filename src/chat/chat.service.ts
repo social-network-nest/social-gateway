@@ -10,4 +10,12 @@ export class ChatService {
     list() {
         return this.chatClient.send({ cmd: 'list' }, {});
     }
+
+    createChat(payload: any) {
+        return this.chatClient.send({ cmd: 'create_chat' }, payload);
+    }
+
+    sendMessage(payload: any) {
+        return this.chatClient.send({ cmd: 'send_message' }, payload);
+    }
 }
