@@ -30,7 +30,7 @@ export class AuthController {
   }
 
   @Get('user/:id')
-  async findUserByEmail(
+  async findUser(
     @Param('id') id: string,
   ) {
     return this.authService.find(id);
