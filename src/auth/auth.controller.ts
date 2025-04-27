@@ -33,7 +33,7 @@ export class AuthController {
   async findUser(
     @Param('id') id: string,
   ) {
-    return this.authService.find(id);
+    return this.authService.findUserById(id);
   }
 
   @Get('list-users')

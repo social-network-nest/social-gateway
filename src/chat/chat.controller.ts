@@ -49,7 +49,7 @@ export class ChatController {
       this.chatService.showMessageChat(chatId)
     );
     for (const item of messages) {
-      const { firstName, lastName } = await this.authService.find(item.userId);
+      const { firstName, lastName } = await this.authService.findUserById(item.userId);
       item.userId = `${firstName} ${lastName}`;
     }
     return messages;
