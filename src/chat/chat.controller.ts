@@ -47,13 +47,15 @@ export class ChatController {
     return this.chatService.createChat(payload);
   }
 
-  @Post('message')
+  @Post(':id/message')
   async sendMessage(
     @Headers('authorization') authorization: string,
+    @Param('id') id: string,
     @Payload() payload: any,
   ) {
     const { userId } = await this.authService.accessToken(authorization);
     payload.userId = userId;
+    payload.chatId = id;
     return this.chatService.sendMessage(payload);
   }
 
@@ -68,7 +70,8 @@ export class ChatController {
     )
     for (const message of messages) {
       const { firstName, lastName } = await this.authService.findUserById(message.userId);
-      message.userId = `${firstName} ${lastName}`;
+      message.user = `${firstName} ${lastName}`;
+      delete message.userId;
     }
     return messages;
   }
