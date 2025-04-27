@@ -18,4 +18,8 @@ export class ChatService {
     sendMessage(payload: any) {
         return this.chatClient.send({ cmd: 'send_message' }, payload);
     }
+
+    showMessageChat(chatId: string) {
+        return this.chatClient.send({ cmd: 'show_message_chat' }, chatId);
+    }
 }
