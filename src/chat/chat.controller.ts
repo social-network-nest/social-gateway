@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, NotFoundException, Param, Post } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { AuthService } from 'src/auth/auth.service';
 import { Payload } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Controller('chat')
 export class ChatController {
@@ -44,6 +45,13 @@ export class ChatController {
     @Param('chatId') chatId: string,
   ) {
     await this.authService.accessToken(authorization);
-    return this.chatService.showMessageChat(chatId);
+    const messages = await firstValueFrom(
+      this.chatService.showMessageChat(chatId)
+    );
+    for (const item of messages) {
+      const { firstName, lastName } = await this.authService.find(item.userId);
+      item.userId = `${firstName} ${lastName}`;
+    }
+    return messages;
   }
 }

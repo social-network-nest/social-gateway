@@ -1,4 +1,4 @@
-import { Controller, Get, Headers, Inject, Post } from '@nestjs/common';
+import { Controller, Get, Headers, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy, Payload } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 
@@ -29,11 +29,11 @@ export class AuthController {
     return this.authService.verifyToken(autorization);
   }
 
-  @Post('find-user')
+  @Get('user/:id')
   async findUserByEmail(
-    @Payload('email') email: string,
+    @Param('id') id: string,
   ) {
-    return this.authService.findUserByEmail(email);
+    return this.authService.find(id);
   }
 
   @Get('list-users')

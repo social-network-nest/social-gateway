@@ -39,8 +39,9 @@ export class AuthService {
         return this.validateToken(token);
     }
 
-    async findUserByEmail(email: string) {
-        return this.authClient.send({ cmd: 'find.user.email' }, email);
+    async find(id: string) {
+        return this.authClient.send({ cmd: 'find' }, id)
+            .toPromise();
     }
 
     async listUsers() {
