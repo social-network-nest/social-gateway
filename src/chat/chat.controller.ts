@@ -11,11 +11,11 @@ export class ChatController {
   ) {}
 
   @Get()
-  async list(
+  async listChat(
     @Headers('authorization') authorization: string,
   ) {
-    await this.authService.accessToken(authorization);
-    return this.chatService.list();
+    const { userId } = await this.authService.accessToken(authorization);
+    return this.chatService.listChat(userId);
   }
 
   @Post()

@@ -7,8 +7,8 @@ export class ChatService {
         @Inject('CHAT_SERVICE') private readonly chatClient: ClientProxy,
     ) {}
 
-    list() {
-        return this.chatClient.send({ cmd: 'list' }, {});
+    listChat(userId) {
+        return this.chatClient.send({ cmd: 'list_chat' }, userId);
     }
 
     createChat(payload: any) {
