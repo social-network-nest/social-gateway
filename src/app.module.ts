@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
-import { FeedModule } from './feed/feed.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { FeedModule } from './feed/feed.module';
     }),
     AuthModule,
     PostModule,
-    FeedModule,
+    ChatModule,
   ],
 })
 export class AppModule {}

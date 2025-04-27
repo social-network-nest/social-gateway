@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
-import { FeedService } from './feed.service';
-import { FeedController } from './feed.controller';
+import { ChatService } from './chat.service';
+import { ChatController } from './chat.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  controllers: [FeedController],
+  controllers: [ChatController],
   imports: [
     ClientsModule.register([
       {
-        name: 'FEED_SERVICE',
+        name: 'CHAT_SERVICE',
         transport: Transport.TCP,
         options: {
           host: '127.0.0.1',
-          port: 4005,
+          port: 4004,
         },
-      },
+      }
     ]),
     AuthModule,
   ],
-  providers: [FeedService],
+  providers: [ChatService],
 })
-export class FeedModule {}
+export class ChatModule {}
